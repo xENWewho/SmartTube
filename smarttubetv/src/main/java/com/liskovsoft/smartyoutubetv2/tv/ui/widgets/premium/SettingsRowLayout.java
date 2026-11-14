@@ -3,6 +3,7 @@ package com.liskovsoft.smartyoutubetv2.tv.ui.widgets.premium;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
@@ -62,9 +63,21 @@ public class SettingsRowLayout extends LinearLayout {
             textView.setTag(R.id.settings_row_original_colors, saved);
         }
 
+        // Keep the original typeface too, so bold is only used while selected
+        Object savedTypeface = textView.getTag(R.id.settings_row_original_typeface);
+        if (savedTypeface == null) {
+            savedTypeface = textView.getTypeface() != null ? textView.getTypeface() : Typeface.DEFAULT;
+            textView.setTag(R.id.settings_row_original_typeface, savedTypeface);
+        }
+
         if (!focused || !textView.isEnabled()) {
             textView.setTextColor((ColorStateList) saved);
+            textView.setTypeface((Typeface) savedTypeface);
             return;
+        }
+
+        if (textView.getId() == android.R.id.title) {
+            textView.setTypeface(Typeface.create((Typeface) savedTypeface, Typeface.BOLD));
         }
 
         ColorStateList colors = resolveColors(attr);

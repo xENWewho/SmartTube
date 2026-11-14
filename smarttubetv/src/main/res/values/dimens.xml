@@ -119,12 +119,12 @@
     <dimen name="settings_panel_padding">22dp</dimen>
     <dimen name="settings_row_bar_inset">8dp</dimen>
     <dimen name="settings_row_bar_radius">14dp</dimen>
-    <dimen name="settings_switch_width">34dp</dimen>
-    <dimen name="settings_switch_height">20dp</dimen>
-    <dimen name="settings_switch_radius">10dp</dimen>
-    <dimen name="settings_switch_thumb">16dp</dimen>
-    <dimen name="settings_switch_thumb_margin">2dp</dimen>
-    <dimen name="settings_switch_thumb_on">16dp</dimen>
+    <dimen name="settings_switch_width">42dp</dimen>
+    <dimen name="settings_switch_height">26dp</dimen>
+    <dimen name="settings_switch_radius">13dp</dimen>
+    <dimen name="settings_switch_thumb">20dp</dimen>
+    <dimen name="settings_switch_thumb_margin">3dp</dimen>
+    <dimen name="settings_switch_thumb_on">19dp</dimen>
 
     <!-- Vine card widget values -->
     <dimen name="lb_basic_card_main_width">140dp</dimen>
