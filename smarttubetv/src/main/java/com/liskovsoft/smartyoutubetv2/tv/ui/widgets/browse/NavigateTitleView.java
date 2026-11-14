@@ -303,7 +303,9 @@ public class NavigateTitleView extends TitleView implements OnDataChange, Accoun
             Colors orbColors = mAccountView.getOrbColors();
             mAccountView.setOrbColors(new Colors(orbColors.color, orbColors.brightColor, ContextCompat.getColor(getContext(), R.color.orb_icon_color)));
             mAccountView.setOrbIcon(ContextCompat.getDrawable(getContext(), R.drawable.browse_title_account));
-            TooltipCompatHandler.setTooltipText(mAccountView, getContext().getString(R.string.dialog_account_none));
+            // YouTube scheme: "Sign in" says more than "None"
+            TooltipCompatHandler.setTooltipText(mAccountView, getContext().getString(
+                    TopButtons.getColors(getContext()) != null ? R.string.dialog_add_account : R.string.dialog_account_none));
         }
     }
 
