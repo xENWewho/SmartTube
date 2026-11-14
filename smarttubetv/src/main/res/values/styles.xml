@@ -13,6 +13,8 @@
     <attr name="playerButtonColor" format="reference"/>
     <attr name="playerButtonFocusColor" format="reference"/>
     <attr name="playerButtonFocusIconColor" format="reference"/>
+    <attr name="settingsPanelBackground" format="reference"/>
+    <attr name="settingsPanelTitleBackground" format="reference"/>
 
     <!-- MOD: YouTube style font (Roboto) instead of the condensed leanback font -->
     <style name="TextAppearance.Leanback" parent="TextAppearance.LeanbackBase">
@@ -33,6 +35,9 @@
     <!-- Decrease header spacing in BrowseView -->
     <style name="BrowseHeaderStyle" parent="Widget.Leanback.Headers.VerticalGridView">
         <item name="android:verticalSpacing">@dimen/browse_headers_vertical_spacing</item>
+        <!-- MOD: logo sits top left now, keep menu items from scrolling under it -->
+        <item name="android:paddingTop">@dimen/browse_headers_padding_top</item>
+        <item name="android:clipToPadding">true</item>
     </style>
 
     <!-- Color scheme: Teal (Default) -->
@@ -59,6 +64,9 @@
         <!-- Round player buttons (see drawable-v21/lb_control_button_*.xml) -->
         <item name="playerButtonColor">@color/youtube_button</item>
         <item name="playerButtonFocusColor">@color/youtube_button_focused</item>
+        <!-- Settings panel colors (see leanback_preference_fragment.xml) -->
+        <item name="settingsPanelBackground">@color/lb_preference_decor_list_background</item>
+        <item name="settingsPanelTitleBackground">?attr/defaultBrandColor</item>
     </style>
     <style name="App.Theme.Leanback.Browse" parent="Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/shelf_background_dark</item>
@@ -82,6 +90,9 @@
         <!-- Fix 'screen off' mode on some devices? -->
         <item tools:targetApi="18" name="android:windowOverscan">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <!-- Settings panel colors (see leanback_preference_fragment.xml) -->
+        <item name="settingsPanelBackground">@color/lb_preference_decor_list_background</item>
+        <item name="settingsPanelTitleBackground">?attr/defaultBrandColor</item>
     </style>
     <style name="App.Theme.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
         <item name="android:windowBackground">@color/shelf_background_dark</item>
@@ -92,6 +103,9 @@
         <item name="android:windowFullscreen">true</item>
         <!-- Overlay bottom bar (can't hide it from styles) -->
         <item tools:targetApi="19" name="android:windowTranslucentNavigation">true</item>
+        <!-- Settings panel colors (see leanback_preference_fragment.xml) -->
+        <item name="settingsPanelBackground">@color/lb_preference_decor_list_background</item>
+        <item name="settingsPanelTitleBackground">?attr/defaultBrandColor</item>
     </style>
     <!-- AppDialogFragment style -->
     <style name="App.Theme.Leanback.Preferences.Base" parent="Theme.Leanback">
@@ -108,6 +122,9 @@
         <item name="android:windowFullscreen">true</item>
         <!-- Overlay bottom bar (can't hide it from styles) -->
         <item tools:targetApi="19" name="android:windowTranslucentNavigation">true</item>
+        <!-- Settings panel colors (see leanback_preference_fragment.xml) -->
+        <item name="settingsPanelBackground">@color/lb_preference_decor_list_background</item>
+        <item name="settingsPanelTitleBackground">?attr/defaultBrandColor</item>
     </style>
     <!-- Give ability to override style for different api -->
     <style name="App.Theme.Leanback.Preferences" parent="App.Theme.Leanback.Preferences.Base" />
@@ -281,6 +298,8 @@
         <item name="playerButtonFocusIconColor">@color/youtube_menu_selected_text</item>
         <item name="detailsDescriptionTitleStyle">@style/YouTube.PlayerTitle</item>
         <item name="detailsDescriptionSubtitleStyle">@style/YouTube.PlayerSubtitle</item>
+        <item name="settingsPanelBackground">@color/youtube_surface</item>
+        <item name="settingsPanelTitleBackground">@color/youtube_panel_title</item>
     </style>
     <style name="App.Theme.YouTube.Browse" parent="App.Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/youtube_background</item>
@@ -295,10 +314,14 @@
         <item name="appLogo">@mipmap/app_logo</item>
         <item name="topButtonColor">@color/youtube_chip</item>
         <item name="topButtonFocusColor">@color/youtube_red</item>
+        <item name="settingsPanelBackground">@color/youtube_surface</item>
+        <item name="settingsPanelTitleBackground">@color/youtube_panel_title</item>
     </style>
     <style name="App.Theme.YouTube.Preferences" parent="App.Theme.Leanback.Preferences">
         <item name="android:colorPrimary" tools:targetApi="21">@color/youtube_surface</item>
         <item name="android:colorAccent" tools:targetApi="21">@color/youtube_red</item>
+        <item name="settingsPanelBackground">@color/youtube_surface</item>
+        <item name="settingsPanelTitleBackground">@color/youtube_panel_title</item>
     </style>
     <style name="ProgressBarHorizontal.YouTube" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_bar_red</item>
