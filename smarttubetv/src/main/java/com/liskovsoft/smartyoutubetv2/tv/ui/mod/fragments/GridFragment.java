@@ -133,15 +133,13 @@ public class GridFragment extends Fragment implements BrowseSupportFragment.Main
     }
 
     protected void showOrHideTitle() {
-        if (mGridViewHolder.getGridView().findViewHolderForAdapterPosition(mSelectedPosition)
-                == null || mMainFragmentAdapter.getFragmentHost() == null) {
+        if (mGridPresenter == null || mMainFragmentAdapter.getFragmentHost() == null) {
             return;
         }
-        if (!mGridViewHolder.getGridView().hasPreviousViewInSameRow(mSelectedPosition)) {
-            mMainFragmentAdapter.getFragmentHost().showTitleView(true);
-        } else {
-            mMainFragmentAdapter.getFragmentHost().showTitleView(false);
-        }
+        // MOD: show the logo bar only on the first row, so lower rows never scroll under it
+        // (the old check could leave the bar visible while the grid was scrolling)
+        int columns = Math.max(1, mGridPresenter.getNumberOfColumns());
+        mMainFragmentAdapter.getFragmentHost().showTitleView(mSelectedPosition < columns);
     }
 
     /**

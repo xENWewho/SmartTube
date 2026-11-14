@@ -250,16 +250,12 @@ public class MultiGridFragment extends Fragment implements BrowseSupportFragment
     }
 
     private void showOrHideTitle2() {
-        if (mGridViewHolder2 == null
-                || mGridViewHolder2.getGridView().findViewHolderForAdapterPosition(mSelectedPosition2) == null
-                || mMainFragmentAdapter.getFragmentHost() == null) {
+        if (mGridPresenter2 == null || mMainFragmentAdapter.getFragmentHost() == null) {
             return;
         }
-        if (!mGridViewHolder2.getGridView().hasPreviousViewInSameRow(mSelectedPosition2)) {
-            mMainFragmentAdapter.getFragmentHost().showTitleView(true);
-        } else {
-            mMainFragmentAdapter.getFragmentHost().showTitleView(false);
-        }
+        // MOD: show the logo bar only on the first row
+        int columns = Math.max(1, mGridPresenter2.getNumberOfColumns());
+        mMainFragmentAdapter.getFragmentHost().showTitleView(mSelectedPosition2 < columns);
     }
 
     /**
