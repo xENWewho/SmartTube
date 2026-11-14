@@ -21,6 +21,8 @@
     <attr name="settingsRowSummaryColor" format="reference"/>
     <attr name="settingsCheckButton" format="reference"/>
     <attr name="titleBarBackground" format="reference"/>
+    <attr name="premiumTooltipFrame" format="reference"/>
+    <attr name="premiumTooltipTextColor" format="reference"/>
 
     <!-- MOD: YouTube style font (Roboto) instead of the condensed leanback font -->
     <style name="TextAppearance.Leanback" parent="TextAppearance.LeanbackBase">
@@ -79,6 +81,8 @@
         <item name="settingsRowSummaryColor">@color/lb_preference_item_secondary_text_color</item>
         <item name="settingsCheckButton">?android:attr/listChoiceIndicatorMultiple</item>
         <item name="titleBarBackground">@android:color/transparent</item>
+        <item name="premiumTooltipFrame">@drawable/tooltip_frame_dark_mod</item>
+        <item name="premiumTooltipTextColor">@color/foreground_material_dark_mod</item>
     </style>
     <style name="App.Theme.Leanback.Browse" parent="Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/shelf_background_dark</item>
@@ -111,6 +115,8 @@
         <item name="settingsRowSummaryColor">@color/lb_preference_item_secondary_text_color</item>
         <item name="settingsCheckButton">?android:attr/listChoiceIndicatorMultiple</item>
         <item name="titleBarBackground">@android:color/transparent</item>
+        <item name="premiumTooltipFrame">@drawable/tooltip_frame_dark_mod</item>
+        <item name="premiumTooltipTextColor">@color/foreground_material_dark_mod</item>
     </style>
     <style name="App.Theme.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
         <item name="android:windowBackground">@color/shelf_background_dark</item>
@@ -130,6 +136,8 @@
         <item name="settingsRowSummaryColor">@color/lb_preference_item_secondary_text_color</item>
         <item name="settingsCheckButton">?android:attr/listChoiceIndicatorMultiple</item>
         <item name="titleBarBackground">@android:color/transparent</item>
+        <item name="premiumTooltipFrame">@drawable/tooltip_frame_dark_mod</item>
+        <item name="premiumTooltipTextColor">@color/foreground_material_dark_mod</item>
     </style>
     <!-- AppDialogFragment style -->
     <style name="App.Theme.Leanback.Preferences.Base" parent="Theme.Leanback">
@@ -155,6 +163,8 @@
         <item name="settingsRowSummaryColor">@color/lb_preference_item_secondary_text_color</item>
         <item name="settingsCheckButton">?android:attr/listChoiceIndicatorMultiple</item>
         <item name="titleBarBackground">@android:color/transparent</item>
+        <item name="premiumTooltipFrame">@drawable/tooltip_frame_dark_mod</item>
+        <item name="premiumTooltipTextColor">@color/foreground_material_dark_mod</item>
     </style>
     <!-- Give ability to override style for different api -->
     <style name="App.Theme.Leanback.Preferences" parent="App.Theme.Leanback.Preferences.Base" />
@@ -338,6 +348,8 @@
         <item name="settingsCheckButton">@drawable/settings_switch_youtube</item>
         <item name="android:colorControlNormal" tools:targetApi="21">@color/youtube_control_normal</item>
         <item name="titleBarBackground">@drawable/title_bar_background_youtube</item>
+        <item name="premiumTooltipFrame">@drawable/tooltip_frame_youtube</item>
+        <item name="premiumTooltipTextColor">@android:color/white</item>
     </style>
     <style name="App.Theme.YouTube.Browse" parent="App.Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/youtube_background</item>
@@ -362,6 +374,8 @@
         <item name="settingsCheckButton">@drawable/settings_switch_youtube</item>
         <item name="android:colorControlNormal" tools:targetApi="21">@color/youtube_control_normal</item>
         <item name="titleBarBackground">@drawable/title_bar_background_youtube</item>
+        <item name="premiumTooltipFrame">@drawable/tooltip_frame_youtube</item>
+        <item name="premiumTooltipTextColor">@android:color/white</item>
     </style>
     <style name="App.Theme.YouTube.Preferences" parent="App.Theme.Leanback.Preferences">
         <item name="android:colorPrimary" tools:targetApi="21">@color/youtube_surface</item>
@@ -375,6 +389,8 @@
         <item name="settingsRowSummaryColor">@color/settings_row_summary_youtube</item>
         <item name="settingsCheckButton">@drawable/settings_switch_youtube</item>
         <item name="android:colorControlNormal" tools:targetApi="21">@color/youtube_control_normal</item>
+        <item name="premiumTooltipFrame">@drawable/tooltip_frame_youtube</item>
+        <item name="premiumTooltipTextColor">@android:color/white</item>
     </style>
     <style name="ProgressBarHorizontal.YouTube" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_bar_red</item>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MOD: dark rounded button label (YouTube scheme) -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/youtube_tooltip" />
+    <stroke android:width="1dp" android:color="@color/youtube_tooltip_border" />
+    <corners android:radius="@dimen/settings_row_bar_radius" />
+</shape>
