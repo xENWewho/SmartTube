@@ -157,4 +157,6 @@
     <dimen name="tooltip_vertical_padding_mod">6.5dp</dimen>
     <dimen name="tooltip_y_offset_non_touch_mod">0dp</dimen>
     <dimen name="tooltip_y_offset_touch_mod">16dp</dimen>
+    <!-- MOD: small gap between a button and its label -->
+    <dimen name="tooltip_y_offset_non_touch">10dp</dimen>
 </resources>

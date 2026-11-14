@@ -15,7 +15,7 @@
   ~ limitations under the License
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.liskovsoft.smartyoutubetv2.tv.ui.widgets.premium.SettingsRowLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -76,4 +76,4 @@
         <Space android:layout_width="0dp" android:layout_height="@dimen/lb_preference_item_text_space_bottom" />
     </LinearLayout>
 
-</LinearLayout>
+</com.liskovsoft.smartyoutubetv2.tv.ui.widgets.premium.SettingsRowLayout>

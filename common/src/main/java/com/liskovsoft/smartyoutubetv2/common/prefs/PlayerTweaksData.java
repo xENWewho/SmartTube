@@ -43,11 +43,12 @@ public class PlayerTweaksData implements ProfileChangeListener {
     public static final int PLAYER_BUTTON_SOUND_OFF = 1 << 25;
     public static final int PLAYER_BUTTON_AFR = 1 << 26;
     public static final int PLAYER_BUTTON_VIDEO_FLIP = 1 << 27;
-    public static final int PLAYER_BUTTON_DEFAULT = PLAYER_BUTTON_SEARCH | PLAYER_BUTTON_PIP | PLAYER_BUTTON_SCREEN_DIMMING | PLAYER_BUTTON_VIDEO_SPEED |
-            PLAYER_BUTTON_VIDEO_STATS | PLAYER_BUTTON_OPEN_CHANNEL | PLAYER_BUTTON_SUBTITLES | PLAYER_BUTTON_SUBSCRIBE |
-            PLAYER_BUTTON_LIKE | PLAYER_BUTTON_DISLIKE | PLAYER_BUTTON_ADD_TO_PLAYLIST | PLAYER_BUTTON_PLAY_PAUSE |
-            PLAYER_BUTTON_REPEAT_MODE | PLAYER_BUTTON_NEXT | PLAYER_BUTTON_PREVIOUS | PLAYER_BUTTON_HIGH_QUALITY |
-            PLAYER_BUTTON_VIDEO_INFO | PLAYER_BUTTON_CHAT;
+    // MOD: simple YouTube-style player by default (9 buttons). Others can be turned on in Settings > Player > Player buttons.
+    public static final int PLAYER_BUTTON_DEFAULT = PLAYER_BUTTON_PLAY_PAUSE | PLAYER_BUTTON_PREVIOUS | PLAYER_BUTTON_NEXT |
+            PLAYER_BUTTON_LIKE | PLAYER_BUTTON_DISLIKE | PLAYER_BUTTON_SUBSCRIBE | PLAYER_BUTTON_SUBTITLES |
+            PLAYER_BUTTON_VIDEO_SPEED | PLAYER_BUTTON_HIGH_QUALITY;
+    private static final String PREMIUM_PREFS = "smarttube_premium";
+    private static final String PREMIUM_SIMPLE_BUTTONS_APPLIED = "simple_player_buttons_v1";
     public static final int DNS_TYPE_SYSTEM = GlobalPreferences.DNS_TYPE_SYSTEM;
     public static final int DNS_TYPE_IPV4 = GlobalPreferences.DNS_TYPE_IPV4;
     public static final int DNS_TYPE_GOOGLE = GlobalPreferences.DNS_TYPE_GOOGLE;
@@ -118,6 +119,21 @@ public class PlayerTweaksData implements ProfileChangeListener {
         mPrefs = AppPrefs.instance(context);
         mPrefs.addListener(this);
         restoreData();
+        applySimplePlayerButtonsOnce(context);
+    }
+
+    /**
+     * MOD: switch existing installs to the simple player buttons one time.
+     * After that, the user's own choice in Settings > Player > Player buttons is kept.
+     */
+    private void applySimplePlayerButtonsOnce(Context context) {
+        android.content.SharedPreferences prefs = context.getSharedPreferences(PREMIUM_PREFS, Context.MODE_PRIVATE);
+        if (prefs.getBoolean(PREMIUM_SIMPLE_BUTTONS_APPLIED, false)) {
+            return;
+        }
+        mPlayerButtons = PLAYER_BUTTON_DEFAULT;
+        persistDataInt();
+        prefs.edit().putBoolean(PREMIUM_SIMPLE_BUTTONS_APPLIED, true).apply();
     }
 
     public static PlayerTweaksData instance(Context context) {
