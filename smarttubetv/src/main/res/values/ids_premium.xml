@@ -4,4 +4,5 @@
     <item name="header_dim_alpha" type="id"/>
     <!-- Settings row text colors, restored when the row loses focus -->
     <item name="settings_row_original_colors" type="id"/>
+    <item name="settings_row_original_typeface" type="id"/>
 </resources>
