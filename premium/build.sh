@@ -24,8 +24,8 @@ PROPS
 
 # Keep SmartTube's version name; version code always goes up
 BASE_VERSION=$(grep -m1 'versionName' smarttubetv/build.gradle | awk -F'"' '{print $2}')
-VERSION_NAME="${BASE_VERSION}-premium"
 VERSION_CODE=$(( $(date +%s) / 60 ))
+VERSION_NAME="${BASE_VERSION}-premium-${VERSION_CODE}"
 sed -i "0,/versionCode [0-9]*/s//versionCode ${VERSION_CODE}/" smarttubetv/build.gradle
 sed -i "0,/versionName \"[^\"]*\"/s//versionName \"${VERSION_NAME}\"/" smarttubetv/build.gradle
 echo "Building SmartTube Premium ${VERSION_NAME} (code ${VERSION_CODE})"
