@@ -77,6 +77,9 @@
     <color name="youtube_red_dark">#CC0000</color>
     <color name="youtube_text_secondary">#AAAAAA</color>
     <color name="youtube_panel_title">#181818</color>
+    <color name="youtube_switch_off">#5A5A5A</color>
+    <color name="youtube_summary_focused">#5F5F5F</color>
+    <color name="youtube_control_normal">#8A8A8A</color>
     <color name="youtube_button">#26FFFFFF</color>
     <color name="youtube_button_focused">#59FFFFFF</color>
     <color name="youtube_focus_ring">#FFFFFF</color>

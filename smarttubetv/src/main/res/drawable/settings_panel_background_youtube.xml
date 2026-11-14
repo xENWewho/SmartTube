@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MOD: premium settings, floating rounded panel (YouTube scheme) -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:inset="@dimen/settings_panel_gap">
+    <shape android:shape="rectangle">
+        <solid android:color="@color/youtube_surface" />
+        <corners android:radius="@dimen/settings_panel_radius" />
+    </shape>
+</inset>

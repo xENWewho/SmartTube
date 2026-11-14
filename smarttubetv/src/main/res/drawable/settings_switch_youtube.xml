@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Before Android 6 the switch drawing isn't supported: keep the normal checkbox -->
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@android:drawable/btn_check"
+    android:inset="0dp" />
