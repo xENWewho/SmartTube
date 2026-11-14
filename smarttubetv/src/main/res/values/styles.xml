@@ -20,6 +20,7 @@
     <attr name="settingsRowTitleColor" format="reference"/>
     <attr name="settingsRowSummaryColor" format="reference"/>
     <attr name="settingsCheckButton" format="reference"/>
+    <attr name="settingsCheckMarginStart" format="dimension"/>
     <attr name="titleBarBackground" format="reference"/>
     <attr name="premiumTooltipFrame" format="reference"/>
     <attr name="premiumTooltipTextColor" format="reference"/>
@@ -83,6 +84,7 @@
         <item name="titleBarBackground">@android:color/transparent</item>
         <item name="premiumTooltipFrame">@drawable/tooltip_frame_dark_mod</item>
         <item name="premiumTooltipTextColor">@color/foreground_material_dark_mod</item>
+        <item name="settingsCheckMarginStart">-6dp</item>
     </style>
     <style name="App.Theme.Leanback.Browse" parent="Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/shelf_background_dark</item>
@@ -117,6 +119,7 @@
         <item name="titleBarBackground">@android:color/transparent</item>
         <item name="premiumTooltipFrame">@drawable/tooltip_frame_dark_mod</item>
         <item name="premiumTooltipTextColor">@color/foreground_material_dark_mod</item>
+        <item name="settingsCheckMarginStart">-6dp</item>
     </style>
     <style name="App.Theme.Leanback.GuidedStep" parent="Theme.Leanback.GuidedStep">
         <item name="android:windowBackground">@color/shelf_background_dark</item>
@@ -138,6 +141,7 @@
         <item name="titleBarBackground">@android:color/transparent</item>
         <item name="premiumTooltipFrame">@drawable/tooltip_frame_dark_mod</item>
         <item name="premiumTooltipTextColor">@color/foreground_material_dark_mod</item>
+        <item name="settingsCheckMarginStart">-6dp</item>
     </style>
     <!-- AppDialogFragment style -->
     <style name="App.Theme.Leanback.Preferences.Base" parent="Theme.Leanback">
@@ -165,6 +169,7 @@
         <item name="titleBarBackground">@android:color/transparent</item>
         <item name="premiumTooltipFrame">@drawable/tooltip_frame_dark_mod</item>
         <item name="premiumTooltipTextColor">@color/foreground_material_dark_mod</item>
+        <item name="settingsCheckMarginStart">-6dp</item>
     </style>
     <!-- Give ability to override style for different api -->
     <style name="App.Theme.Leanback.Preferences" parent="App.Theme.Leanback.Preferences.Base" />
@@ -350,6 +355,7 @@
         <item name="titleBarBackground">@drawable/title_bar_background_youtube</item>
         <item name="premiumTooltipFrame">@drawable/tooltip_frame_youtube</item>
         <item name="premiumTooltipTextColor">@android:color/white</item>
+        <item name="settingsCheckMarginStart">0dp</item>
     </style>
     <style name="App.Theme.YouTube.Browse" parent="App.Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/youtube_background</item>
@@ -376,6 +382,7 @@
         <item name="titleBarBackground">@drawable/title_bar_background_youtube</item>
         <item name="premiumTooltipFrame">@drawable/tooltip_frame_youtube</item>
         <item name="premiumTooltipTextColor">@android:color/white</item>
+        <item name="settingsCheckMarginStart">0dp</item>
     </style>
     <style name="App.Theme.YouTube.Preferences" parent="App.Theme.Leanback.Preferences">
         <item name="android:colorPrimary" tools:targetApi="21">@color/youtube_surface</item>
@@ -391,6 +398,7 @@
         <item name="android:colorControlNormal" tools:targetApi="21">@color/youtube_control_normal</item>
         <item name="premiumTooltipFrame">@drawable/tooltip_frame_youtube</item>
         <item name="premiumTooltipTextColor">@android:color/white</item>
+        <item name="settingsCheckMarginStart">0dp</item>
     </style>
     <style name="ProgressBarHorizontal.YouTube" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_bar_red</item>
