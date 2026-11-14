@@ -92,6 +92,14 @@ public class IconHeaderItemPresenter extends RowHeaderPresenter {
 
     private void applyFocusColors(View rootView, boolean hasFocus) {
         Context context = rootView.getContext();
+
+        // Full opacity while focused, back to the menu's dimming when not
+        if (hasFocus) {
+            rootView.setAlpha(1.0f);
+        } else {
+            Object dimAlpha = rootView.getTag(R.id.header_dim_alpha);
+            rootView.setAlpha(dimAlpha instanceof Float ? (Float) dimAlpha : mUnselectedAlpha);
+        }
         int color = ContextCompat.getColor(context, hasFocus ? R.color.youtube_menu_selected_text : R.color.white);
 
         TextView label = rootView.findViewById(R.id.header_label);
@@ -119,8 +127,10 @@ public class IconHeaderItemPresenter extends RowHeaderPresenter {
     // mUnselectAlpha, and also assumes the xml inflation will return a RowHeaderView.
     @Override
     protected void onSelectLevelChanged(RowHeaderPresenter.ViewHolder holder) {
-        holder.view.setAlpha(mUnselectedAlpha + holder.getSelectLevel() *
-                (1.0f - mUnselectedAlpha));
+        float alpha = mUnselectedAlpha + holder.getSelectLevel() * (1.0f - mUnselectedAlpha);
+        holder.view.setTag(R.id.header_dim_alpha, alpha);
+        // The focused item has the white bar: never dim it
+        holder.view.setAlpha(holder.view.hasFocus() ? 1.0f : alpha);
     }
 
     private final RequestListener<Drawable> mErrorListener = new RequestListener<Drawable>() {
