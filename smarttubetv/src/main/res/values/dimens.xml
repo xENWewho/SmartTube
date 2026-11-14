@@ -3,6 +3,12 @@
     <!-- Default, same as xhdpi -->
     <!-- 320dpi, Amazon Fire TV Stick -->
 
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="card_focus_ring_width">3dp</dimen>
+    <!-- YouTube style player -->
+    <dimen name="player_controls_row_margin_top">12dp</dimen>
+    <dimen name="player_time_margin_start">16dp</dimen>
+    <dimen name="player_controls_scroll_padding">6dp</dimen>
     <dimen name="card_width">200dp</dimen>
     <dimen name="card_height">110dp</dimen>
     <!-- text_badge_image_view.xml, default: 12sp -->

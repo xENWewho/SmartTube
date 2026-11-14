@@ -7,6 +7,17 @@
     <attr name="cardSelectedBackground" format="reference"/>
     <attr name="cardProgressStyle" format="reference"/>
     <attr name="appLogo" format="reference"/>
+    <attr name="cardFocusRing" format="reference"/>
+    <attr name="topButtonColor" format="reference"/>
+    <attr name="topButtonFocusColor" format="reference"/>
+    <attr name="playerButtonColor" format="reference"/>
+    <attr name="playerButtonFocusColor" format="reference"/>
+    <attr name="playerButtonFocusIconColor" format="reference"/>
+
+    <!-- MOD: YouTube style font (Roboto) instead of the condensed leanback font -->
+    <style name="TextAppearance.Leanback" parent="TextAppearance.LeanbackBase">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
 
     <!-- Increase spacing between items in GridView -->
     <style name="GridViewStyle" parent="Widget.Leanback.GridItems.VerticalGridView">
@@ -45,6 +56,9 @@
         <!-- Fix 'screen off' mode on some devices? -->
         <item tools:targetApi="18" name="android:windowOverscan">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <!-- Round player buttons (see drawable-v21/lb_control_button_*.xml) -->
+        <item name="playerButtonColor">@color/youtube_button</item>
+        <item name="playerButtonFocusColor">@color/youtube_button_focused</item>
     </style>
     <style name="App.Theme.Leanback.Browse" parent="Theme.Leanback.Browse">
         <item name="android:windowBackground">@color/shelf_background_dark</item>
@@ -248,4 +262,61 @@
         <item name="cardSelectedBackground">@color/card_selected_background_white_grey</item>
     </style>
     <!--  End Color scheme: Dark Blue (OLED)  -->
+
+    <!--  Color scheme: YouTube  -->
+    <style name="App.Theme.YouTube.Player" parent="App.Theme.Leanback.Player">
+        <item name="android:windowBackground">@color/youtube_background</item>
+        <item name="playbackProgressPrimaryColor">@color/youtube_red</item>
+        <item name="playbackProgressSecondaryColor">@color/light_red</item>
+        <item name="playbackControlsIconHighlightColor">@color/youtube_red</item>
+        <item name="cardProgressStyle">@style/ProgressBarHorizontal.YouTube</item>
+        <item name="shelfBackground">@color/youtube_background</item>
+        <item name="cardDefaultBackground">@color/youtube_background</item>
+        <item name="cardSelectedBackground">@color/youtube_background</item>
+        <item name="cardFocusRing">@drawable/card_focus_ring</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/youtube_red</item>
+        <!-- YouTube style: plain icons, selected button is a white circle with a dark icon -->
+        <item name="playerButtonColor">@android:color/transparent</item>
+        <item name="playerButtonFocusColor">@color/youtube_focus_ring</item>
+        <item name="playerButtonFocusIconColor">@color/youtube_menu_selected_text</item>
+        <item name="detailsDescriptionTitleStyle">@style/YouTube.PlayerTitle</item>
+        <item name="detailsDescriptionSubtitleStyle">@style/YouTube.PlayerSubtitle</item>
+    </style>
+    <style name="App.Theme.YouTube.Browse" parent="App.Theme.Leanback.Browse">
+        <item name="android:windowBackground">@color/youtube_background</item>
+        <item name="brandColor">@color/youtube_background</item>
+        <item name="brandAccentColor">@color/youtube_red</item>
+        <item name="cardProgressStyle">@style/ProgressBarHorizontal.YouTube</item>
+        <item name="shelfBackground">@color/youtube_background</item>
+        <item name="cardDefaultBackground">@color/youtube_background</item>
+        <item name="cardSelectedBackground">@color/youtube_background</item>
+        <item name="cardFocusRing">@drawable/card_focus_ring</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/youtube_red</item>
+        <item name="appLogo">@mipmap/app_logo</item>
+        <item name="topButtonColor">@color/youtube_chip</item>
+        <item name="topButtonFocusColor">@color/youtube_red</item>
+    </style>
+    <style name="App.Theme.YouTube.Preferences" parent="App.Theme.Leanback.Preferences">
+        <item name="android:colorPrimary" tools:targetApi="21">@color/youtube_surface</item>
+        <item name="android:colorAccent" tools:targetApi="21">@color/youtube_red</item>
+    </style>
+    <style name="ProgressBarHorizontal.YouTube" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_bar_red</item>
+    </style>
+    <style name="YouTube.PlayerTitle" parent="Widget.Leanback.DetailsDescriptionTitleStyle">
+        <item name="android:textAppearance">@style/YouTube.PlayerTitle.Text</item>
+    </style>
+    <style name="YouTube.PlayerTitle.Text" parent="TextAppearance.Leanback.DetailsDescriptionTitle">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="YouTube.PlayerSubtitle" parent="Widget.Leanback.DetailsDescriptionSubtitleStyle">
+        <item name="android:textAppearance">@style/YouTube.PlayerSubtitle.Text</item>
+    </style>
+    <style name="YouTube.PlayerSubtitle.Text" parent="TextAppearance.Leanback.DetailsDescriptionSubtitle">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/youtube_text_secondary</item>
+    </style>
+    <!--  End Color scheme: YouTube  -->
 </resources>

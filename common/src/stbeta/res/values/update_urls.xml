@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="update_urls">
-        <item>https://github.com/yuliskov/SmartTubeNext/releases/download/latest/smarttube_beta2.json</item>
+        <!-- MOD: SmartTube Premium updates come from its own releases repo -->
+        <item>https://github.com/xENWewho/SmartTube/releases/download/premium-latest/smarttube_premium.json</item>
     </string-array>
 </resources>

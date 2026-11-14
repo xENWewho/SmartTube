@@ -1,0 +1,68 @@
+name: Weekly update from SmartTube
+
+# Once a week: merge the newest official SmartTube release into this fork,
+# keeping the Premium changes, then build and publish a new APK.
+# If SmartTube changed the same lines as Premium, nothing is changed: the run
+# fails and the current version stays. Send the error to get the merge fixed.
+on:
+  schedule:
+    - cron: '23 3 * * 0'   # Sundays 03:23 UTC (Saturday 11:23 PM Puerto Rico)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: premium-build
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - name: Checkout fork
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find newest SmartTube release
+        id: upstream
+        run: |
+          TAG=$(gh api repos/yuliskov/SmartTube/releases/latest --jq .tag_name)
+          echo "Newest SmartTube release: $TAG"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          git fetch --no-tags https://github.com/yuliskov/SmartTube "refs/tags/$TAG:refs/tags/upstream-$TAG"
+          if git merge-base --is-ancestor "upstream-$TAG" HEAD; then
+            echo "Already up to date with SmartTube $TAG."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Merge SmartTube ${{ steps.upstream.outputs.tag }} (keeps Premium changes)
+        if: steps.upstream.outputs.skip == 'false'
+        run: bash premium/merge-upstream.sh "upstream-${{ steps.upstream.outputs.tag }}" "${{ steps.upstream.outputs.tag }}"
+
+      - name: Push merge
+        if: steps.upstream.outputs.skip == 'false'
+        run: git push origin HEAD:master
+
+      - name: Update submodules
+        if: steps.upstream.outputs.skip == 'false'
+        run: git submodule update --init --recursive
+
+      - name: Set up JDK 17
+        if: steps.upstream.outputs.skip == 'false'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Build and publish
+        if: steps.upstream.outputs.skip == 'false'
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: bash premium/build.sh "Based on SmartTube ${{ steps.upstream.outputs.tag }}"

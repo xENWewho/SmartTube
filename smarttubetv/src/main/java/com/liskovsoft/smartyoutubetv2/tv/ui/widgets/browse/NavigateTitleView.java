@@ -30,6 +30,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.views.ViewManager;
 import com.liskovsoft.smartyoutubetv2.common.misc.MediaServiceManager;
 import com.liskovsoft.smartyoutubetv2.common.misc.MediaServiceManager.AccountChangeListener;
 import com.liskovsoft.smartyoutubetv2.common.prefs.common.DataChangeBase.OnDataChange;
+import com.liskovsoft.smartyoutubetv2.tv.util.TopButtons;
 import com.liskovsoft.smartyoutubetv2.common.prefs.GeneralData;
 import com.liskovsoft.smartyoutubetv2.common.prefs.MainUIData;
 import com.liskovsoft.smartyoutubetv2.common.utils.Utils;
@@ -212,6 +213,14 @@ public class NavigateTitleView extends TitleView implements OnDataChange, Accoun
         ViewUtil.enableMarquee(mPipTitle);
         ViewUtil.setTextScrollSpeed(mPipTitle, mainUIData.getCardTextScrollSpeed());
         TooltipCompatHandler.setTooltipText(mExitPip, getContext().getString(R.string.return_to_background_video));
+
+        // YouTube scheme: same grey for all top buttons, red only when selected
+        Colors topButtonColors = TopButtons.getColors(getContext());
+        if (topButtonColors != null) {
+            mAccountView.setOrbColors(topButtonColors);
+            mLanguageView.setOrbColors(topButtonColors);
+            mExitPip.setOrbColors(topButtonColors);
+        }
 
         mGlobalClock = findViewById(R.id.global_time);
         mGlobalClock.showDate(false);
