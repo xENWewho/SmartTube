@@ -1,6 +1,7 @@
 package com.liskovsoft.smartyoutubetv2.tv.presenter;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -82,6 +83,30 @@ public class IconHeaderItemPresenter extends RowHeaderPresenter {
         TextView label = rootView.findViewById(R.id.header_label);
         if (label != null) {
             label.setText(headerItem.getName());
+        }
+
+        // YouTube style: dark text and icon on the white bar of the focused item
+        rootView.setOnFocusChangeListener((v, hasFocus) -> applyFocusColors(v, hasFocus));
+        applyFocusColors(rootView, rootView.hasFocus());
+    }
+
+    private void applyFocusColors(View rootView, boolean hasFocus) {
+        Context context = rootView.getContext();
+        int color = ContextCompat.getColor(context, hasFocus ? R.color.youtube_menu_selected_text : R.color.white);
+
+        TextView label = rootView.findViewById(R.id.header_label);
+        if (label != null) {
+            label.setTextColor(color);
+        }
+
+        ImageView iconView = rootView.findViewById(R.id.header_icon);
+        // Don't tint remote images (e.g. channel avatars)
+        if (iconView != null && mIconUrl == null) {
+            if (hasFocus) {
+                iconView.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+            } else {
+                iconView.clearColorFilter();
+            }
         }
     }
 

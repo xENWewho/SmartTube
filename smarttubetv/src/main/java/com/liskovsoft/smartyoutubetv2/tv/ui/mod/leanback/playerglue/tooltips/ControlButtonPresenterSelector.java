@@ -13,14 +13,19 @@
  */
 package com.liskovsoft.smartyoutubetv2.tv.ui.mod.leanback.playerglue.tooltips;
 
+import android.content.Context;
+import android.graphics.PorterDuff;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.leanback.R;
+import androidx.core.content.ContextCompat;
 import androidx.leanback.widget.Action;
 import androidx.leanback.widget.PlaybackControlsRow;
 import androidx.leanback.widget.Presenter;
@@ -74,6 +79,8 @@ public class ControlButtonPresenterSelector extends PresenterSelector {
         ImageView mIcon;
         TextView mLabel;
         View mFocusableView;
+        // YouTube style: icon color while the button is selected (0 = disabled)
+        int mFocusIconColor;
 
         public ActionViewHolder(View view) {
             super(view);
@@ -95,7 +102,60 @@ public class ControlButtonPresenterSelector extends PresenterSelector {
         public ViewHolder onCreateViewHolder(ViewGroup parent) {
             View v = LayoutInflater.from(parent.getContext())
                     .inflate(mLayoutResourceId, parent, false);
-            return new ActionViewHolder(v);
+            ActionViewHolder vh = new ActionViewHolder(v);
+            setupFocusIconColor(vh, parent.getContext());
+            return vh;
+        }
+
+        /**
+         * MOD: YouTube style. The selected button is a white circle, so its icon turns dark.
+         * Uses a global focus listener because the button's own focus listener is taken by tooltips.
+         */
+        private static void setupFocusIconColor(ActionViewHolder vh, Context context) {
+            vh.mFocusIconColor = resolveColor(context, com.liskovsoft.smartyoutubetv2.tv.R.attr.playerButtonFocusIconColor);
+
+            if (vh.mFocusIconColor == 0 || vh.mIcon == null || vh.mFocusableView == null) {
+                return;
+            }
+
+            final ViewTreeObserver.OnGlobalFocusChangeListener focusListener = (oldFocus, newFocus) -> {
+                if (oldFocus == vh.mFocusableView || newFocus == vh.mFocusableView) {
+                    updateIconColor(vh);
+                }
+            };
+
+            vh.view.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+                @Override
+                public void onViewAttachedToWindow(View v) {
+                    v.getViewTreeObserver().addOnGlobalFocusChangeListener(focusListener);
+                    updateIconColor(vh);
+                }
+
+                @Override
+                public void onViewDetachedFromWindow(View v) {
+                    v.getViewTreeObserver().removeOnGlobalFocusChangeListener(focusListener);
+                }
+            });
+        }
+
+        private static void updateIconColor(ActionViewHolder vh) {
+            if (vh.mFocusIconColor == 0 || vh.mIcon == null || vh.mFocusableView == null) {
+                return;
+            }
+
+            if (vh.mFocusableView.hasFocus()) {
+                vh.mIcon.setColorFilter(vh.mFocusIconColor, PorterDuff.Mode.SRC_IN);
+            } else {
+                vh.mIcon.clearColorFilter();
+            }
+        }
+
+        private static int resolveColor(Context context, int attr) {
+            TypedValue value = new TypedValue();
+            if (context.getTheme().resolveAttribute(attr, value, true) && value.resourceId != 0) {
+                return ContextCompat.getColor(context, value.resourceId);
+            }
+            return 0;
         }
 
         // Used inside: com.liskovsoft.smartyoutubetv2.tv.ui.mod.leanback.playerglue.tweaks.ControlBarPresenter.ViewHolder.bindControlToAction()
@@ -106,6 +166,7 @@ public class ControlButtonPresenterSelector extends PresenterSelector {
             ActionViewHolder vh = (ActionViewHolder) viewHolder;
 
             vh.mIcon.setImageDrawable(action.getIcon());
+            updateIconColor(vh);
             if (action instanceof PaddingAction) {
                 int padding = ((PaddingAction) action).getPadding();
                 if (padding > 0) {

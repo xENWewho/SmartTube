@@ -1,9 +1,13 @@
 package com.liskovsoft.smartyoutubetv2.tv.ui.widgets.complexcardview;
 
 import android.content.Context;
+import android.graphics.Outline;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 import androidx.leanback.widget.ImageCardView;
@@ -39,6 +43,25 @@ public class ComplexImageCardView extends ImageCardView {
     private void init() {
         mComplexImageView = findViewById(R.id.main_image_wrapper);
         mHandler = new Handler(Looper.getMainLooper());
+        roundThumbnailCorners();
+    }
+
+    /**
+     * YouTube style: rounded thumbnail corners
+     */
+    private void roundThumbnailCorners() {
+        if (mComplexImageView == null || Build.VERSION.SDK_INT < 21) {
+            return;
+        }
+
+        final float radius = getResources().getDimension(R.dimen.card_corner_radius);
+        mComplexImageView.setOutlineProvider(new ViewOutlineProvider() {
+            @Override
+            public void getOutline(View view, Outline outline) {
+                outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
+            }
+        });
+        mComplexImageView.setClipToOutline(true);
     }
 
     private void enableTitleAnimation(boolean enable) {

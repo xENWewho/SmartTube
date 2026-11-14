@@ -68,4 +68,18 @@
     <color name="lb_speech_orb_not_recording">@color/orb_color</color>
     <color name="lb_speech_orb_not_recording_pulsed">@color/orb_bright_color</color>
     <color name="lb_speech_orb_not_recording_icon">@color/orb_icon_color</color>
+
+    <!-- YouTube color scheme -->
+    <color name="youtube_background">#0F0F0F</color>
+    <color name="youtube_surface">#212121</color>
+    <color name="youtube_chip">#272727</color>
+    <color name="youtube_red">#FF0000</color>
+    <color name="youtube_red_dark">#CC0000</color>
+    <color name="youtube_text_secondary">#AAAAAA</color>
+    <color name="youtube_button">#26FFFFFF</color>
+    <color name="youtube_button_focused">#59FFFFFF</color>
+    <color name="youtube_focus_ring">#FFFFFF</color>
+    <color name="youtube_focus_fill">#14FFFFFF</color>
+    <color name="youtube_menu_selected">#FFFFFF</color>
+    <color name="youtube_menu_selected_text">#0F0F0F</color>
 </resources>
