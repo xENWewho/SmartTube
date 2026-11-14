@@ -110,6 +110,18 @@
     <dimen name="browse_headers_vertical_spacing">10dp</dimen>
     <!-- Space for the logo row above the menu -->
     <dimen name="browse_headers_padding_top">96dp</dimen>
+    <!-- Premium settings (YouTube scheme) -->
+    <dimen name="settings_panel_gap">14dp</dimen>
+    <dimen name="settings_panel_radius">22dp</dimen>
+    <dimen name="settings_panel_padding">22dp</dimen>
+    <dimen name="settings_row_bar_inset">8dp</dimen>
+    <dimen name="settings_row_bar_radius">14dp</dimen>
+    <dimen name="settings_switch_width">34dp</dimen>
+    <dimen name="settings_switch_height">20dp</dimen>
+    <dimen name="settings_switch_radius">10dp</dimen>
+    <dimen name="settings_switch_thumb">16dp</dimen>
+    <dimen name="settings_switch_thumb_margin">2dp</dimen>
+    <dimen name="settings_switch_thumb_on">16dp</dimen>
 
     <!-- Vine card widget values -->
     <dimen name="lb_basic_card_main_width">140dp</dimen>
