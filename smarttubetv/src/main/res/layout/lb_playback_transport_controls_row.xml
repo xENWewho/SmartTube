@@ -85,54 +85,22 @@
                       android:focusable="true"
                       android:layout_height="1dp"/>
 
-        <!-- MOD: YouTube style player: progress bar on top, one row of controls below -->
-        <!-- Quality and date info (small, right side, above the progress bar) -->
-        <RelativeLayout android:id="@+id/additional_info"
-                        android:layout_width="match_parent"
+        <!-- MOD: YouTube style player: info line, progress bar, one scrolling row of controls -->
+        <!-- Info line above the bar: time on the left, quality and date on the right -->
+        <RelativeLayout android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layoutDirection="ltr"
+                        android:layout_marginBottom="@dimen/player_info_margin_bottom"
                         android:focusable="false"
                         tools:ignore="RtlHardcoded" >
-            <TextView
-                android:id="@+id/quality_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                style="?attr/playbackControlsTimeStyle" />
-            <com.liskovsoft.smartyoutubetv2.tv.ui.widgets.time.DateTimeView
-                android:id="@+id/date_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/quality_info"
-                style="?attr/playbackControlsTimeStyle" />
-        </RelativeLayout>
-        <com.liskovsoft.smartyoutubetv2.tv.ui.mod.leanback.misc.SeekBar
-            android:id="@+id/playback_progress"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/lb_playback_transport_progressbar_height"
-            android:focusable="true"
-            android:focusableInTouchMode="true" />
-        <!-- One row: play/prev/next + time on the left, other buttons on the right -->
-        <LinearLayout android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layoutDirection="ltr"
-                      android:orientation="horizontal"
-                      android:gravity="center_vertical"
-                      android:clipChildren="false"
-                      android:clipToPadding="false"
-                      android:layout_marginTop="@dimen/player_controls_row_margin_top"
-                      tools:ignore="RtlHardcoded" >
-            <FrameLayout
-                android:id="@+id/controls_dock"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <RelativeLayout android:id="@+id/time_info"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layoutDirection="ltr"
-                            android:layout_marginStart="@dimen/player_time_margin_start"
-                            android:focusable="false" >
+            <LinearLayout android:id="@+id/time_info"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_alignParentStart="true"
+                          android:layout_alignParentBottom="true"
+                          android:orientation="horizontal"
+                          android:layoutDirection="ltr"
+                          android:focusable="false" >
                 <RelativeLayout android:id="@+id/current_time_wrapper"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -164,37 +132,76 @@
                     android:id="@+id/ending_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/current_time_wrapper"
-                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="@dimen/player_time_margin_start"
+                    android:alpha="0.7"
+                    style="?attr/playbackControlsTimeStyle" />
+            </LinearLayout>
+            <RelativeLayout android:id="@+id/additional_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layoutDirection="ltr"
+                            android:focusable="false" >
+                <TextView
+                    android:id="@+id/quality_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    style="?attr/playbackControlsTimeStyle" />
+                <com.liskovsoft.smartyoutubetv2.tv.ui.widgets.time.DateTimeView
+                    android:id="@+id/date_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/quality_info"
                     style="?attr/playbackControlsTimeStyle" />
             </RelativeLayout>
-            <!-- Scrolls only when there are more buttons than fit -->
-            <HorizontalScrollView
-                android:layout_width="0dp"
+        </RelativeLayout>
+        <com.liskovsoft.smartyoutubetv2.tv.ui.mod.leanback.misc.SeekBar
+            android:id="@+id/playback_progress"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/lb_playback_transport_progressbar_height"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+        <!-- One row with all buttons. Scrolls when they don't fit, edges fade, nothing draws off-screen.
+             Main buttons on the left, the rest pushed to the right end when everything fits. -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/player_controls_row_margin_top"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            android:overScrollMode="never"
+            android:requiresFadingEdge="horizontal"
+            android:fadingEdgeLength="@dimen/player_controls_fading_edge"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/player_controls_scroll_padding"
+            android:paddingBottom="@dimen/player_controls_scroll_padding"
+            android:layoutDirection="ltr"
+            android:focusable="false"
+            tools:ignore="RtlHardcoded" >
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="@dimen/player_time_margin_start"
-                android:fillViewport="true"
-                android:scrollbars="none"
-                android:overScrollMode="never"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
                 android:clipChildren="false"
-                android:clipToPadding="false"
-                android:paddingTop="@dimen/player_controls_scroll_padding"
-                android:paddingBottom="@dimen/player_controls_scroll_padding"
-                android:focusable="false" >
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="end|center_vertical"
-                    android:clipChildren="false"
-                    android:clipToPadding="false" >
-                    <FrameLayout
-                        android:id="@+id/secondary_controls_dock"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-            </HorizontalScrollView>
-        </LinearLayout>
+                android:clipToPadding="false" >
+                <FrameLayout
+                    android:id="@+id/controls_dock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:minWidth="@dimen/player_controls_group_gap" />
+                <FrameLayout
+                    android:id="@+id/secondary_controls_dock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </HorizontalScrollView>
     </com.liskovsoft.smartyoutubetv2.tv.ui.mod.leanback.playerglue.tweaks.PlaybackTransportRowView>
 </LinearLayout>
