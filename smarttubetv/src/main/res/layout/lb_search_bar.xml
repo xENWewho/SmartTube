@@ -40,7 +40,7 @@
             android:layout_marginStart="@dimen/lb_search_bar_items_margin_start"
             android:layout_marginTop="@dimen/lb_search_bar_inner_margin_top"
             android:layout_marginBottom="@dimen/lb_search_bar_inner_margin_bottom"
-            android:background="@drawable/rounded_search_bg"
+            android:background="?attr/premiumSearchBarBackground"
             >
 
         <ImageView

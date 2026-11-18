@@ -15,6 +15,8 @@ import com.liskovsoft.smartyoutubetv2.common.app.models.data.SettingsItem;
 import com.liskovsoft.smartyoutubetv2.common.prefs.MainUIData;
 import com.liskovsoft.smartyoutubetv2.tv.R;
 import com.liskovsoft.smartyoutubetv2.tv.util.FocusRing;
+import com.liskovsoft.smartyoutubetv2.tv.util.SettingsListStyle;
+import android.graphics.PorterDuff;
 import com.liskovsoft.smartyoutubetv2.tv.util.ViewUtil;
 
 public class SettingsCardPresenter extends Presenter {
@@ -26,6 +28,10 @@ public class SettingsCardPresenter extends Presenter {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent) {
         Context context = parent.getContext();
+
+        if (SettingsListStyle.isEnabled(context)) {
+            return createListRow(context);
+        }
 
         mDefaultBackgroundColor =
                 ContextCompat.getColor(context, Helpers.getThemeAttr(context, R.attr.cardDefaultBackground));
@@ -60,6 +66,34 @@ public class SettingsCardPresenter extends Presenter {
             if (hasFocus) {
                 ViewUtil.enableMarquee(textView);
             } else {
+                ViewUtil.disableMarquee(textView);
+            }
+        });
+
+        return new ViewHolder(container);
+    }
+
+    /**
+     * MOD: YouTube style row: icon + name, white rounded bar with dark text and icon when focused.
+     */
+    private ViewHolder createListRow(Context context) {
+        @SuppressLint("InflateParams")
+        View container = LayoutInflater.from(context).inflate(R.layout.settings_row_youtube, null);
+        TextView textView = container.findViewById(R.id.settings_title);
+        ImageView imageView = container.findViewById(R.id.settings_image);
+        int normalColor = ContextCompat.getColor(context, R.color.white);
+        int focusedColor = ContextCompat.getColor(context, R.color.youtube_menu_selected_text);
+        textView.setTextColor(normalColor);
+        ViewUtil.setTextScrollSpeed(textView, getCardTextScrollSpeed(context));
+
+        container.setOnFocusChangeListener((v, hasFocus) -> {
+            textView.setTextColor(hasFocus ? focusedColor : normalColor);
+            textView.setTypeface(null, hasFocus ? android.graphics.Typeface.BOLD : android.graphics.Typeface.NORMAL);
+            if (hasFocus) {
+                imageView.setColorFilter(focusedColor, PorterDuff.Mode.SRC_IN);
+                ViewUtil.enableMarquee(textView);
+            } else {
+                imageView.clearColorFilter();
                 ViewUtil.disableMarquee(textView);
             }
         });

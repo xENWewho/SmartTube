@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- MOD: YouTube style settings row (icon + name). White rounded bar when focused. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:focusableInTouchMode="true"
+              android:focusable="true"
+              android:orientation="horizontal"
+              android:gravity="center_vertical"
+              android:background="@drawable/header_item_background"
+              android:paddingStart="@dimen/settings_row_padding_start"
+              android:paddingEnd="@dimen/settings_row_padding_end"
+              android:layout_width="@dimen/settings_row_width"
+              android:layout_height="@dimen/settings_row_height">
+    <ImageView
+        android:id="@+id/settings_image"
+        android:layout_width="@dimen/settings_row_icon_size"
+        android:layout_height="@dimen/settings_row_icon_size"
+        android:scaleType="fitCenter"
+        android:visibility="invisible"
+        tools:ignore="ContentDescription"/>
+    <com.liskovsoft.smartyoutubetv2.tv.ui.widgets.marqueetextviewcompat.MarqueeTextViewCompat
+        android:id="@+id/settings_title"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/settings_row_text_margin"
+        android:textSize="@dimen/settings_row_text_size"
+        android:fontFamily="sans-serif"/>
+</LinearLayout>

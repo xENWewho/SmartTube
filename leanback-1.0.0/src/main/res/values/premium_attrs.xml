@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MOD: SmartTube Premium. Optional search bar colors set by the app theme (YouTube scheme). -->
+    <attr name="premiumSearchTextColor" format="color"/>
+    <attr name="premiumSearchTextColorSpeechMode" format="color"/>
+    <attr name="premiumSearchHintColor" format="color"/>
+    <attr name="premiumSearchHintColorSpeechMode" format="color"/>
+</resources>

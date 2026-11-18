@@ -176,16 +176,27 @@ public class SearchBar extends RelativeLayout {
         mInputMethodManager =
                 (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
 
-        mTextColorSpeechMode = r.getColor(R.color.lb_search_bar_text_speech_mode);
-        mTextColor = r.getColor(R.color.lb_search_bar_text);
+        // MOD: the app theme can set its own search colors (SmartTube Premium, YouTube scheme)
+        mTextColorSpeechMode = themeColor(context, R.attr.premiumSearchTextColorSpeechMode, r.getColor(R.color.lb_search_bar_text_speech_mode));
+        mTextColor = themeColor(context, R.attr.premiumSearchTextColor, r.getColor(R.color.lb_search_bar_text));
 
         mBackgroundSpeechAlpha = r.getInteger(R.integer.lb_search_bar_speech_mode_background_alpha);
         mBackgroundAlpha = r.getInteger(R.integer.lb_search_bar_text_mode_background_alpha);
 
-        mTextHintColorSpeechMode = r.getColor(R.color.lb_search_bar_hint_speech_mode);
-        mTextHintColor = r.getColor(R.color.lb_search_bar_hint);
+        mTextHintColorSpeechMode = themeColor(context, R.attr.premiumSearchHintColorSpeechMode, r.getColor(R.color.lb_search_bar_hint_speech_mode));
+        mTextHintColor = themeColor(context, R.attr.premiumSearchHintColor, r.getColor(R.color.lb_search_bar_hint));
 
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+    }
+
+    private static int themeColor(Context context, int attr, int fallback) {
+        android.util.TypedValue value = new android.util.TypedValue();
+        if (context.getTheme().resolveAttribute(attr, value, true)
+                && value.type >= android.util.TypedValue.TYPE_FIRST_COLOR_INT
+                && value.type <= android.util.TypedValue.TYPE_LAST_COLOR_INT) {
+            return value.data;
+        }
+        return fallback;
     }
 
     @Override
