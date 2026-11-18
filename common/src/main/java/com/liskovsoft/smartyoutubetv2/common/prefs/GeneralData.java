@@ -92,6 +92,21 @@ public class GeneralData implements ProfileChangeListener {
         mPrefs = AppPrefs.instance(context);
         mPrefs.addListener(this);
         restoreState();
+        enableUpdatePopupOnce(context);
+    }
+
+    /**
+     * MOD: SmartTube Premium shows a popup when an update is ready (instead of a small menu notification).
+     * Applied once; the user's own choice in Settings > About is kept after that.
+     */
+    private void enableUpdatePopupOnce(Context context) {
+        android.content.SharedPreferences prefs = context.getSharedPreferences("smarttube_premium", Context.MODE_PRIVATE);
+        if (prefs.getBoolean("update_popup_v1", false)) {
+            return;
+        }
+        mIsOldUpdateNotificationsEnabled = true;
+        persistStateInt();
+        prefs.edit().putBoolean("update_popup_v1", true).apply();
     }
 
     public static GeneralData instance(Context context) {
@@ -625,7 +640,7 @@ public class GeneralData implements ProfileChangeListener {
         mMasterPassword = Helpers.parseStr(split, 41);
         // StackOverflow on old devices?
         //mIsOldHomeLookEnabled = Helpers.parseBoolean(split, 42, Build.VERSION.SDK_INT <= 19);
-        mIsOldUpdateNotificationsEnabled = Helpers.parseBoolean(split, 43, false);
+        mIsOldUpdateNotificationsEnabled = Helpers.parseBoolean(split, 43, true);
         mScreensaverDimmingPercents = Helpers.parseInt(split, 44, 80);
         mNextPreviousAction = Helpers.parseInt(split, 45, ACTION_UNDEFINED);
         mIsRemapPlayToOKEnabled = Helpers.parseBoolean(split, 46, false);
