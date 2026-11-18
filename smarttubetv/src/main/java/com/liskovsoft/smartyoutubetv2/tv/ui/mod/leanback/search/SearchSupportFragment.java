@@ -35,6 +35,7 @@ import androidx.leanback.widget.SearchBar;
 import androidx.leanback.widget.SearchEditText;
 import androidx.leanback.widget.SearchOrbView;
 import androidx.leanback.widget.SpeechOrbView;
+import com.liskovsoft.smartyoutubetv2.tv.util.TopButtons;
 import androidx.leanback.widget.SpeechRecognitionCallback;
 import androidx.leanback.widget.VerticalGridView;
 import com.liskovsoft.sharedutils.helpers.Helpers;
@@ -403,6 +404,14 @@ public class SearchSupportFragment extends Fragment {
         mSearchSettingsOrbView.setOnOrbClickedListener(v -> onSearchSettingsClicked());
 
         mSpeechOrbView = mSearchBar.findViewById(R.id.lb_search_bar_speech_orb);
+
+        // MOD: YouTube scheme: search buttons grey, red only when selected (same as the top buttons)
+        SearchOrbView.Colors topButtonColors = TopButtons.getColors(getContext());
+        if (topButtonColors != null) {
+            mSearchBar.setSearchAffordanceColors(topButtonColors);
+            mSearchOrbView.setOrbColors(topButtonColors);
+            mSearchSettingsOrbView.setOrbColors(topButtonColors);
+        }
         OnFocusChangeListener previousListener = mSpeechOrbView.getOnFocusChangeListener();
         mSpeechOrbView.setOnFocusChangeListener((v, focused) -> {
             if (!focused) {

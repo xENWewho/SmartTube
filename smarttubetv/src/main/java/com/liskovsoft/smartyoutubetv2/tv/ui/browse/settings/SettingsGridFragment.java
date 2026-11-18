@@ -8,6 +8,7 @@ import androidx.leanback.widget.OnItemViewClickedListener;
 import androidx.leanback.widget.Presenter;
 import androidx.leanback.widget.Row;
 import androidx.leanback.widget.RowPresenter;
+import androidx.leanback.widget.FocusHighlight;
 import androidx.leanback.widget.VerticalGridPresenter;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.SettingsGroup;
 import com.liskovsoft.smartyoutubetv2.common.app.models.data.SettingsItem;
@@ -18,6 +19,7 @@ import com.liskovsoft.smartyoutubetv2.common.utils.SimpleEditDialog;
 import com.liskovsoft.smartyoutubetv2.common.utils.Utils;
 import com.liskovsoft.smartyoutubetv2.tv.R;
 import com.liskovsoft.smartyoutubetv2.tv.presenter.SettingsCardPresenter;
+import com.liskovsoft.smartyoutubetv2.tv.util.SettingsListStyle;
 import com.liskovsoft.smartyoutubetv2.tv.ui.browse.interfaces.SettingsSection;
 import com.liskovsoft.smartyoutubetv2.tv.ui.browse.video.GridFragmentHelper;
 import com.liskovsoft.smartyoutubetv2.tv.ui.common.LeanbackActivity;
@@ -69,9 +71,14 @@ public class SettingsGridFragment extends GridFragment implements SettingsSectio
     }
 
     private void setupAdapter() {
-        VerticalGridPresenter presenter = new VerticalGridPresenter(ViewUtil.FOCUS_ZOOM_FACTOR, ViewUtil.FOCUS_DIMMER_ENABLED);
-        presenter.enableChildRoundedCorners(getMainUIData().isUiTweakEnabled(MainUIData.UI_TWEAK_ROUNDED_CORNERS));
-        presenter.setNumberOfColumns(GridFragmentHelper.getMaxColsNum(getContext(), R.dimen.settings_card_width));
+        // MOD: YouTube scheme shows settings as a list: one column, no zoom
+        boolean isList = SettingsListStyle.isEnabled(getContext());
+        VerticalGridPresenter presenter = isList ?
+                new VerticalGridPresenter(FocusHighlight.ZOOM_FACTOR_NONE, false) :
+                new VerticalGridPresenter(ViewUtil.FOCUS_ZOOM_FACTOR, ViewUtil.FOCUS_DIMMER_ENABLED);
+        presenter.enableChildRoundedCorners(!isList && getMainUIData().isUiTweakEnabled(MainUIData.UI_TWEAK_ROUNDED_CORNERS));
+        presenter.setShadowEnabled(!isList);
+        presenter.setNumberOfColumns(isList ? 1 : GridFragmentHelper.getMaxColsNum(getContext(), R.dimen.settings_card_width));
         setGridPresenter(presenter);
 
         if (mSettingsAdapter == null) {
