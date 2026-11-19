@@ -77,7 +77,7 @@ public class SettingsRowLayout extends LinearLayout {
         }
 
         if (textView.getId() == android.R.id.title) {
-            textView.setTypeface(Typeface.create((Typeface) savedTypeface, Typeface.BOLD));
+            textView.setTypeface((Typeface) savedTypeface, Typeface.BOLD);
         }
 
         ColorStateList colors = resolveColors(attr);
