@@ -395,7 +395,6 @@
         <item name="premiumTooltipFrame">@drawable/tooltip_frame_youtube</item>
         <item name="premiumTooltipTextColor">@android:color/white</item>
         <item name="settingsCheckMarginStart">0dp</item>
-        <item name="premiumSettingsList">true</item>
         <!-- YouTube style search -->
         <item name="premiumSearchBarBackground">@drawable/search_bar_background_youtube</item>
         <item name="premiumSearchTextColor">@android:color/white</item>

@@ -42,6 +42,10 @@ public class SettingsCardPresenter extends Presenter {
                 ContextCompat.getColor(context, R.color.card_selected_background_white);
         mSelectedTextColor = FocusRing.getTextColor(context, mSelectedBackgroundColor);
 
+        if (FocusRing.isEnabled(context)) {
+            return createPremiumTile(context);
+        }
+
         @SuppressLint("InflateParams")
         View container = LayoutInflater.from(context).inflate(R.layout.settings_card, null);
         container.setBackgroundColor(mDefaultBackgroundColor);
@@ -66,6 +70,41 @@ public class SettingsCardPresenter extends Presenter {
             if (hasFocus) {
                 ViewUtil.enableMarquee(textView);
             } else {
+                ViewUtil.disableMarquee(textView);
+            }
+        });
+
+        return new ViewHolder(container);
+    }
+
+    /**
+     * MOD: premium tile: dark rounded tile, solid white tile with dark bold title and icon when focused.
+     */
+    private ViewHolder createPremiumTile(Context context) {
+        @SuppressLint("InflateParams")
+        View container = LayoutInflater.from(context).inflate(R.layout.settings_card, null);
+        container.setBackground(ContextCompat.getDrawable(context, R.drawable.settings_tile_background_youtube));
+        TextView textView = container.findViewById(R.id.settings_title);
+        ImageView imageView = container.findViewById(R.id.settings_image);
+        int normalColor = ContextCompat.getColor(context, R.color.white);
+        int focusedColor = ContextCompat.getColor(context, R.color.youtube_menu_selected_text);
+        textView.setBackgroundColor(android.graphics.Color.TRANSPARENT);
+        textView.setTextColor(normalColor);
+        android.graphics.Typeface normalTypeface = textView.getTypeface();
+        ViewUtil.setTextScrollSpeed(textView, getCardTextScrollSpeed(context));
+
+        container.setOnFocusChangeListener((v, hasFocus) -> {
+            textView.setTextColor(hasFocus ? focusedColor : normalColor);
+            if (hasFocus) {
+                textView.setTypeface(normalTypeface, android.graphics.Typeface.BOLD);
+            } else {
+                textView.setTypeface(normalTypeface);
+            }
+            if (hasFocus) {
+                imageView.setColorFilter(focusedColor, PorterDuff.Mode.SRC_IN);
+                ViewUtil.enableMarquee(textView);
+            } else {
+                imageView.clearColorFilter();
                 ViewUtil.disableMarquee(textView);
             }
         });

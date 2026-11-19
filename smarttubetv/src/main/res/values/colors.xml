@@ -90,4 +90,5 @@
     <color name="youtube_focus_fill">#14FFFFFF</color>
     <color name="youtube_menu_selected">#FFFFFF</color>
     <color name="youtube_menu_selected_text">#0F0F0F</color>
+    <color name="settings_tile_youtube">#1C1C1C</color>
 </resources>
