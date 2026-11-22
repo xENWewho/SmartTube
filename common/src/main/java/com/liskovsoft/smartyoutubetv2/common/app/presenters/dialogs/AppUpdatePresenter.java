@@ -14,6 +14,7 @@ import com.liskovsoft.smartyoutubetv2.common.app.presenters.BrowsePresenter;
 import com.liskovsoft.smartyoutubetv2.common.app.presenters.base.BasePresenter;
 import com.liskovsoft.smartyoutubetv2.common.prefs.GeneralData;
 import com.liskovsoft.smartyoutubetv2.common.utils.LoadingManager;
+import com.liskovsoft.smartyoutubetv2.common.utils.PremiumAutoInstaller;
 import com.liskovsoft.smartyoutubetv2.common.utils.Utils;
 
 import java.util.ArrayList;
@@ -61,6 +62,13 @@ public class AppUpdatePresenter extends BasePresenter<Void> implements AppUpdate
 
     @Override
     public void onUpdateFound(String versionName, List<String> changelog, String apkPath) {
+        // MOD: SmartTube Premium automatic updates (Android 12+): install quietly when the user leaves the app
+        if (!mIsForceCheck && PremiumAutoInstaller.isSupported(getContext(), versionName)) {
+            GeneralData.instance(getContext()).setChangelog(changelog);
+            PremiumAutoInstaller.scheduleInstall(getContext(), versionName, apkPath);
+            return;
+        }
+
         if (mIsForceCheck) {
             LoadingManager.showLoading(getContext(), false);
             showUpdateDialog(versionName, changelog, apkPath);
