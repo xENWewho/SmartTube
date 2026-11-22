@@ -65,4 +65,5 @@ jobs:
         if: steps.upstream.outputs.skip == 'false'
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
         run: bash premium/build.sh "Based on SmartTube ${{ steps.upstream.outputs.tag }}"

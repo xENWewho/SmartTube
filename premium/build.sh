@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Builds SmartTube Premium from the current checkout and publishes it to this repo's Releases.
 # Usage: premium/build.sh "<release note>"
-# Needs: GH_TOKEN (github.token), KEYSTORE_PASSWORD (repo secret), GITHUB_REPOSITORY (set by Actions)
+# Needs: GH_TOKEN (github.token), KEYSTORE_B64 and KEYSTORE_PASSWORD (repo secrets), GITHUB_REPOSITORY (set by Actions)
 set -euo pipefail
 
 NOTE="${1:-Build}"
@@ -13,10 +13,17 @@ if [ -z "${KEYSTORE_PASSWORD:-}" ]; then
   echo "::error::The KEYSTORE_PASSWORD secret is missing. Add it in Settings > Secrets and variables > Actions, then run this again."
   exit 1
 fi
+if [ -z "${KEYSTORE_B64:-}" ]; then
+  echo "::error::The KEYSTORE_B64 secret is missing. Add it in Settings > Secrets and variables > Actions, then run this again."
+  exit 1
+fi
 
-# Same signing key for every build, so updates install over each other
+# Same signing key for every build, so updates install over each other.
+# The key comes from the KEYSTORE_B64 secret and is never kept in the repo.
+KEY_FILE="${RUNNER_TEMP:-/tmp}/smarttube-premium.p12"
+echo "$KEYSTORE_B64" | base64 -d > "$KEY_FILE"
 cat > keystore.properties <<PROPS
-storeFile=$ROOT/premium/smarttube-premium.p12
+storeFile=$KEY_FILE
 storePassword=$KEYSTORE_PASSWORD
 keyAlias=smarttubepremium
 keyPassword=$KEYSTORE_PASSWORD
@@ -35,7 +42,7 @@ chmod +x gradlew
 
 # Put back build.gradle so the version bump isn't committed
 git checkout -- smarttubetv/build.gradle
-rm -f keystore.properties
+rm -f keystore.properties "$KEY_FILE"
 
 mkdir -p "$OUT"
 APK_DIR=smarttubetv/build/outputs/apk/stbeta/debug
