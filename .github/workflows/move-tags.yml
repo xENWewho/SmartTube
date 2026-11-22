@@ -1,0 +1,23 @@
+# One-time: points the release tags at the cleaned-up history (signing key removed).
+name: Move release tags
+on:
+  push:
+    branches: [ "master" ]
+    paths: [ "premium/tag-map.txt" ]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  move:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Move tags
+        run: |
+          [ -f premium/tag-map.txt ] || exit 0
+          while read -r tag sha; do
+            [ -n "$tag" ] || continue
+            git push --force origin "$sha:refs/tags/$tag"
+          done < premium/tag-map.txt
